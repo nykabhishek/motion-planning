@@ -27,4 +27,4 @@ Codes for Travelling Salesman Problem (TSP) Heuristics and Vehicle Routing Heuri
 
 
 ## Min Max - VRP Approximation Heuristics
-    - Christofides approximations
+    - Fredericksons approximations
