@@ -1,6 +1,6 @@
 # motion-planning
 
-Codes for Travelling Salesman Problem (TSP) Heuristics and Vehicle Routing Heuristics:
+Heuristics and algorithms for the Travelling Salesman Problem (TSP) and Vehicle Routing Problem.
 
 ## Insertion Heuristics
 - Cheapest Insertion
