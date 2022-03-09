@@ -1,5 +1,7 @@
 # motion-planning
 
+[![CodeFactor](https://www.codefactor.io/repository/github/nykabhishek/motion-planning/badge)](https://www.codefactor.io/repository/github/nykabhishek/motion-planning)
+
 Heuristics and algorithms for the Travelling Salesman Problem (TSP) and Vehicle Routing Problem.
 
 ## Insertion Heuristics
