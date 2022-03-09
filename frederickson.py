@@ -25,7 +25,7 @@ def frederickson(adj_matrix, vehicles, depot):
     print(c_max)
 
     break_indices = np.full(vehicles-1, [depot])
-    path_cost = 0;
+    path_cost = 0
   
     # for i in range(vehicles-2):
     j=0
