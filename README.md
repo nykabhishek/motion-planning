@@ -5,9 +5,9 @@
 Heuristics and algorithms for the Travelling Salesman Problem (TSP) and Vehicle Routing Problem.
 
 ## Insertion Heuristics
-- Cheapest Insertion
-- Nearest Insertion
-- Farthest Insertion
+- `Cheapest Insertion`
+- `Nearest Insertion`
+- `Farthest Insertion`
 
 ## Local Optimizers
 - `2-opt`
@@ -30,4 +30,4 @@ Heuristics and algorithms for the Travelling Salesman Problem (TSP) and Vehicle 
 
 
 ## MinMax VRP Heuristics
-- Fredericksons approximations
+- `Fredericksons approximations`
