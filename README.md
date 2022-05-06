@@ -10,14 +10,15 @@ Heuristics and algorithms for the Travelling Salesman Problem (TSP) and Vehicle 
 - Farthest Insertion
 
 ## Local Optimizers
-- 2-opt
-- 3-opt
+- `2-opt`
+- `3-opt`
 
 ## Greedy Heuristics
-- Nearest Neighbour
+- `Nearest Neighbour`
 
 ## TSP Approximation Heuristics
-- Christophedes (A factor of 3/2 of the optimal solution length)
+- `Christophedes Algorithm`
+   - (A factor of 3/2 of the optimal solution length)
 
     **Steps of algorithm:**
 
