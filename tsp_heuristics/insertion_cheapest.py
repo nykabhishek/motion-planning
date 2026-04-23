@@ -91,5 +91,5 @@ if __name__ == "__main__":
     insertion_cost = tour_cost(cost_matrix, insertion_tour)
     print('Cheapest Insertion Tour:', insertion_tour)
     print('Cheapest Insertion Tour Cost:', insertion_cost)
-	
+
     print('Computation Time:',(time.process_time() - start_time))

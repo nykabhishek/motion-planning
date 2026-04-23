@@ -43,5 +43,5 @@ if __name__ == "__main__":
     print('2-opt Tour:', opt2_tour)
     print('2-opt Tour Cost:', tour_cost(cost, opt2_tour))
    
-	
+
     print('Computation Time:',(time.perf_counter() - start_time))

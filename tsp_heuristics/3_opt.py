@@ -118,5 +118,5 @@ if __name__ == "__main__":
     opt3_tour = opt_3(cost, tour, iterations)
     print('3-opt Tour:', opt3_tour)
     print('3-opt Tour Cost:', tour_cost(cost, opt3_tour))
-	
+
     print('Computation Time:',(time.perf_counter() - start_time))

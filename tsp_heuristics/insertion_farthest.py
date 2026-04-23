@@ -29,15 +29,14 @@ def farthest_insertion(cost_matrix, depot, unvisited):
 
         city = far_city(cost_matrix, tour, unvisited)
 
-        if city not in tour:
-            dist=1e6
-            position=None
-            for j in range(len(tour)-1):
-                d_ = cost_matrix[tour[j]][city]+cost_matrix[city][tour[j+1]]-cost_matrix[tour[j]][tour[j+1]]
-                if dist > d_:
-                    dist = d_
-                    position=j+1
-        
+        dist=1e6
+        position=None
+        for j in range(len(tour)-1):
+            d_ = cost_matrix[tour[j]][city]+cost_matrix[city][tour[j+1]]-cost_matrix[tour[j]][tour[j+1]]
+            if dist > d_:
+                dist = d_
+                position=j+1
+
         tour.insert(position, city)
         unvisited.remove(city)
             
@@ -82,6 +81,6 @@ if __name__ == "__main__":
     insertion_cost = tour_cost(cost, insertion_tour)
     print('Farthest Insertion Tour:', insertion_tour)
     print('Farthest Insertion Tour Cost:', insertion_cost)
-	
+
     print('Computation Time:',(time.perf_counter() - start_time))
      

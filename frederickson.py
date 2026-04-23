@@ -85,5 +85,5 @@ if __name__ == "__main__":
     vehicles = 7
     depot = 9
     tsp_tours = frederickson(adj_matrix, vehicles, depot)
-	
+
     print('Computation Time:',(time.perf_counter() - start_time))

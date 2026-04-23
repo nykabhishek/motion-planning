@@ -63,5 +63,5 @@ if __name__ == "__main__":
     insertion_cost = tour_cost(cost, insertion_tour)
     print('Nearest Neighbour Tour:', insertion_tour)
     print('Nearest Neighbour Tour Cost:', insertion_cost)
-	
+
     print('Computation Time:',(time.perf_counter() - start_time))

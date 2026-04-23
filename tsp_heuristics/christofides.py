@@ -16,7 +16,6 @@ def Christofides(adj_matrix):
     G_ = nx.from_numpy_array(-1 * adj_matrix[odd_deg_nodes_ix])
 
     min_weight_matching = nx.max_weight_matching(G_, maxcardinality=True)
-    min_weight_matching_edges = [edge for edge in min_weight_matching]
 
     euler_multigraph = nx.MultiGraph(mst_G)
     for edge in min_weight_matching:
@@ -25,8 +24,6 @@ def Christofides(adj_matrix):
 
     # nx.draw(euler_multigraph, with_labels=True, font_weight='bold')
     # plt.show()
-
-    multi_visit_nodes = [node for (node, val) in euler_multigraph.degree() if val>2 ]
 
     eulerian_walk_nodes = [u for (u,v) in nx.eulerian_path(euler_multigraph)]
     eulerian_walk_nodes.append(eulerian_walk_nodes[0])
@@ -72,7 +69,7 @@ if __name__ == "__main__":
 
     
     tsp_tour, eulerian_walk_nodes, tsp_tour_cost = Christofides(cost_matrix)
-	
+
     print('Computation Time:',(time.perf_counter() - start_time))
     # print('Adjacency Weight Matrix:', adj_matrix)
     print('TSP tour =',eulerian_walk_nodes)
