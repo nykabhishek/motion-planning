@@ -36,9 +36,9 @@ def cheapest_insertion(cost_matrix, depot, unvisited):
     while len(unvisited) > 0:
         
         dist = 1e6
+        position = None
 
         for city in unvisited:
-            position=None
             for j in range(len(tour)-1):
                 d_ = cost_matrix[tour[j]][city]+cost_matrix[city][tour[j+1]]-cost_matrix[tour[j]][tour[j+1]]
                 if dist > d_:
@@ -91,5 +91,5 @@ if __name__ == "__main__":
     insertion_cost = tour_cost(cost_matrix, insertion_tour)
     print('Cheapest Insertion Tour:', insertion_tour)
     print('Cheapest Insertion Tour Cost:', insertion_cost)
-	
+
     print('Computation Time:',(time.process_time() - start_time))

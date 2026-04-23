@@ -28,7 +28,7 @@ def cheapest_insertion(cost_matrix, depot):
 
 if __name__ == "__main__":
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
     # adj_matrix = distance_matrix(node_array, node_array, p=2)
 
     # cost_matrix = np.random.random_integers(0,high=100,size=(5,5))
@@ -63,5 +63,5 @@ if __name__ == "__main__":
     insertion_cost = tour_cost(cost, insertion_tour)
     print('Nearest Neighbour Tour:', insertion_tour)
     print('Nearest Neighbour Tour Cost:', insertion_cost)
-	
-    print('Computation Time:',(time.clock() - start_time))
+
+    print('Computation Time:',(time.perf_counter() - start_time))

@@ -7,12 +7,10 @@ def nearest_city(cost_matrix_, visited_, unvisited_):
     min_length = 1e6
     for city_A in visited_:
         for city_B in unvisited_:
-            if city_B not in visited_:
-                d = cost_matrix_[city_A, city_B]
-                # print(d)
-                if  d < min_length:
-                    min_length = d
-                    nearest_city = city_B
+            d = cost_matrix_[city_A, city_B]
+            if d < min_length:
+                min_length = d
+                nearest_city = city_B
 
     return nearest_city
 
@@ -25,18 +23,16 @@ def nearest_insertion(cost_matrix, depot, unvisited):
 
         city = nearest_city(cost_matrix, tour, unvisited)
 
-        if city not in tour:
-            dist=1e6
-            position=None
-            # print('1')
-            for j in range(len(tour)-1):
-                d_ = cost_matrix[tour[j]][city]+cost_matrix[city][tour[j+1]]-cost_matrix[tour[j]][tour[j+1]]
-                if dist > d_:
-                    dist = d_
-                    position=j+1
-                    
-            tour.insert(position, city)
-            unvisited.remove(city)
+        dist=1e6
+        position=None
+        for j in range(len(tour)-1):
+            d_ = cost_matrix[tour[j]][city]+cost_matrix[city][tour[j+1]]-cost_matrix[tour[j]][tour[j+1]]
+            if dist > d_:
+                dist = d_
+                position=j+1
+
+        tour.insert(position, city)
+        unvisited.remove(city)
 
     return tour
                     
@@ -79,5 +75,5 @@ if __name__ == "__main__":
     insertion_cost = tour_cost(cost, insertion_tour)
     print('Nearest Insertion Tour:', insertion_tour)
     print('Nearest Insertion Tour Cost:', insertion_cost)
-	
+
     print('Computation Time:',(time.process_time() - start_time))
