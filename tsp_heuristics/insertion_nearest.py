@@ -1,5 +1,7 @@
 import time
+
 import numpy as np
+
 from utils import tour_cost
 
 def nearest_city(cost_matrix_, visited_, unvisited_):
@@ -35,8 +37,8 @@ def nearest_insertion(cost_matrix, depot, unvisited):
         unvisited.remove(city)
 
     return tour
-                    
-     
+
+
 if __name__ == "__main__":
 
     start_time = time.process_time()
@@ -65,12 +67,12 @@ if __name__ == "__main__":
                             [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
                             [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
                             [64, 37, 22, 14, 53, 26, 30, 50, 44, 0]])
-    tour = [i for i in range(len(cost_matrix))]
+    tour = list(range(len(cost_matrix)))
     tour.extend([tour[0]])
     depot = 0
     print('Original Tour:', tour)
     print('Original Tour Cost:', tour_cost(cost_matrix, tour))
-    unvisited = [i for i in range(len(cost_matrix))]
+    unvisited = list(range(len(cost_matrix)))
     insertion_tour = nearest_insertion(cost_matrix, depot, unvisited)
     insertion_cost = tour_cost(cost, insertion_tour)
     print('Nearest Insertion Tour:', insertion_tour)

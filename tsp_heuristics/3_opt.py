@@ -1,6 +1,8 @@
-import numpy as np
-from utils import tour_cost
 import time
+
+import numpy as np
+
+from utils import tour_cost
 
 
 def opt_3(cost, tour, iterations):
@@ -11,36 +13,36 @@ def opt_3(cost, tour, iterations):
                 for k in range(j + 2, len(opt_tour) - 1):
                     way = 0
                     current = cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]
-                    if current >  cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]
                         way = 1
-                    if current >  cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]
                         way = 2
-                    if current >  cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]
                         way = 3
-                    if current >  cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]
                         way = 4
-                    if current >  cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]
                         way = 5
-                    if current >  cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]
                         way = 6
-                    if current >  cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]
                         way = 7
-                    
+
                     if way == 1:
                         opt_tour[j+1:k+1] = reversed(opt_tour[j+1:k+1])
                     elif way == 2:
                         opt_tour[i+1:j+1]= reversed(opt_tour[i+1:j+1])
-                    elif way == 3: 
+                    elif way == 3:
                         opt_tour[i+1:j+1],opt_tour[j+1:k+1] = reversed(opt_tour[i+1:j+1]),reversed(opt_tour[j+1:k+1])
                     elif way == 4:
-                        opt_tour = opt_tour[:i+1] + opt_tour[j+1:k+1] + opt_tour[i+1:j+1] + opt_tour[k+1:]      
+                        opt_tour = opt_tour[:i+1] + opt_tour[j+1:k+1] + opt_tour[i+1:j+1] + opt_tour[k+1:]
                     elif way == 5:
                         temp = opt_tour[:i+1] + opt_tour[j+1:k+1]
                         temp += reversed(opt_tour[i+1:j+1])
@@ -60,8 +62,8 @@ def opt_3(cost, tour, iterations):
                         opt_tour = temp
 
         if tour_cost(cost, opt_tour) < tour_cost(cost, tour):
-                    tour = opt_tour
-    
+            tour = opt_tour
+
     return tour
 
 # def opt_3(cost, tour):
@@ -71,7 +73,7 @@ def opt_3(cost, tour, iterations):
 #         for i, j, k in combinations(tour, 3):
 #             # yield path
 #             dist = cost[i-1,i] + cost[j-1,j] + cost[k-1,k]
-        
+
 #             # modify those substrings to be shortest
 #             if dist > cost[tour[i-1], tour[j-1]] + cost[i, j] + cost[k-1, k]:
 #                 path[i:j] = reversed(path[i:j])
@@ -81,18 +83,18 @@ def opt_3(cost, tour, iterations):
 #                 path[i:k] = reversed(path[i:k])
 #             elif dist > cost[i-1, j] + cost[k-1, i] + cost[j-1, k]:
 #                 path[i:k] = path[j:k] + path[i:j]
-        
+
 #         # short circuit if no changed made
 #         post = locs.cost(path)
 #         if pre == post:
 #             return
 #         else:
 #             pre = post
-    
+
 #     return path
 
 if __name__ == "__main__":
-    
+
     # node_array = np.random.random_integers(0,high=10,size=(10,2))
 
     start_time = time.perf_counter()
@@ -109,7 +111,7 @@ if __name__ == "__main__":
                      [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
                      [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
                      [64, 37, 22, 14, 53, 26, 30,  50, 44, 0]])
-    tour = [i for i in range(len(cost))]
+    tour = list(range(len(cost)))
     tour.extend([tour[0]])
     print('Original Tour:', tour)
     print('Original Tour Cost:', tour_cost(cost, tour))
