@@ -60,11 +60,11 @@ def writeTSPLIBfile(tsp_fname,CostMatrix,test_comment):
 	return problem_file, parameter_file
 
 def copy_to_TSPLIBdir(file_name):
-	copy_toTSPLIBdir_cmd = 'cp' + ' ' + pwd + '/' + file_name + '.txt' + ' ' +  pwd + tsplib_dir
+	copy_toTSPLIBdir_cmd = 'cp' + ' ' + pwd + '/' + file_name + '.txt' + ' ' + pwd + tsplib_dir
 	os.system(copy_toTSPLIBdir_cmd)
 
 def run_LKH(file_name):
-	run_lkh_cmd =  pwd + lkh_dir + lkh_cmd + ' ' + pwd + tsplib_dir + file_name + '.par'
+	run_lkh_cmd = pwd + lkh_dir + lkh_cmd + ' ' + pwd + tsplib_dir + file_name + '.par'
 	os.system(run_lkh_cmd)
 
 def rm_solution_file_cmd(file_name):

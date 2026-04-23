@@ -11,25 +11,25 @@ def opt_3(cost, tour, iterations):
                 for k in range(j + 2, len(opt_tour) - 1):
                     way = 0
                     current = cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]
-                    if current >  cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]
                         way = 1
-                    if current >  cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[k+1]]
                         way = 2
-                    if current >  cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[k+1]]
                         way = 3
-                    if current >  cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]
                         way = 4
-                    if current >  cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[j+1]] + cost[opt_tour[k], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]
                         way = 5
-                    if current >  cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[k+1]]
                         way = 6
-                    if current >  cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
+                    if current > cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]:
                         current = cost[opt_tour[i], opt_tour[k]] + cost[opt_tour[j+1], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[k+1]]
                         way = 7
                     
