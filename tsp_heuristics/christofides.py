@@ -1,11 +1,10 @@
-import networkx as nx
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.spatial import distance_matrix
 import time
 
+import networkx as nx
+import numpy as np
+
 def Christofides(adj_matrix):
-    
+
     G = nx.from_numpy_array(adj_matrix)
 
     mst_G = nx.minimum_spanning_tree(G)
@@ -39,18 +38,15 @@ def Christofides(adj_matrix):
 
     tsp_tour_cost = 0
     tsp_tour = nx.DiGraph()
-    for i in range(len(eulerian_walk_nodes)):
-        if i<len(eulerian_walk_nodes)-1:
-            tsp_tour.add_edge(eulerian_walk_nodes[i],eulerian_walk_nodes[i+1],weight = adj_matrix[eulerian_walk_nodes[i], eulerian_walk_nodes[i+1]])
-            tsp_tour_cost = tsp_tour_cost + adj_matrix[eulerian_walk_nodes[i], eulerian_walk_nodes[i+1]] 
-        else:
-            tsp_tour.add_edge(eulerian_walk_nodes[i],eulerian_walk_nodes[0],weight = adj_matrix[eulerian_walk_nodes[i], eulerian_walk_nodes[0]])
-            tsp_tour_cost = tsp_tour_cost + adj_matrix[eulerian_walk_nodes[i], eulerian_walk_nodes[0]]
+    for i, node in enumerate(eulerian_walk_nodes):
+        nxt = eulerian_walk_nodes[i+1] if i < len(eulerian_walk_nodes)-1 else eulerian_walk_nodes[0]
+        tsp_tour.add_edge(node, nxt, weight=adj_matrix[node, nxt])
+        tsp_tour_cost = tsp_tour_cost + adj_matrix[node, nxt]
 
     return tsp_tour, eulerian_walk_nodes, tsp_tour_cost
 
 if __name__ == "__main__":
-    
+
     # node_array = np.random.random_integers(0,high=100,size=(10,2))
 
     cost_matrix = np.array([[ 0, 32, 53, 51, 84, 72, 76, 33, 33, 64],
@@ -67,13 +63,13 @@ if __name__ == "__main__":
     start_time = time.perf_counter()
     # adj_matrix = distance_matrix(node_array, node_array, p=2)
 
-    
+
     tsp_tour, eulerian_walk_nodes, tsp_tour_cost = Christofides(cost_matrix)
 
     print('Computation Time:',(time.perf_counter() - start_time))
     # print('Adjacency Weight Matrix:', adj_matrix)
     print('TSP tour =',eulerian_walk_nodes)
     print('TSP Tour Cost:',tsp_tour_cost)
-    
-    nx.draw(tsp_tour, with_labels=True, font_weight='bold')
-    plt.show()
+
+    # nx.draw(tsp_tour, with_labels=True, font_weight='bold')
+    # plt.show()

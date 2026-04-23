@@ -1,5 +1,7 @@
 import time
+
 import numpy as np
+
 from utils import tour_cost
 
 def cheapest_insertion(cost_matrix, depot):
@@ -54,7 +56,7 @@ if __name__ == "__main__":
                             [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
                             [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
                             [64, 37, 22, 14, 53, 26, 30, 50, 44, 0]])
-    tour = [i for i in range(len(cost_matrix))]
+    tour = list(range(len(cost_matrix)))
     tour.extend([tour[0]])
     depot = 9
     print('Original Tour:', tour)

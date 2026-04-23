@@ -1,11 +1,13 @@
 import time
+
 import numpy as np
+
 from utils import tour_cost
 
 
 def far_city(cost_matrix, visited, unvisited):
-    # distances = cost_matrix
     max_length = 0
+    farthest_city = unvisited[0]
     for city_A in visited:
         for city_B in unvisited:
             d = cost_matrix[city_A, city_B]
@@ -24,7 +26,7 @@ def farthest_insertion(cost_matrix, depot, unvisited):
     tour.append(city1)
     unvisited.remove(city1)
     tour.append(depot)
-    
+
     while len(unvisited) > 0:
 
         city = far_city(cost_matrix, tour, unvisited)
@@ -39,10 +41,10 @@ def farthest_insertion(cost_matrix, depot, unvisited):
 
         tour.insert(position, city)
         unvisited.remove(city)
-            
+
     return tour
-                    
-     
+
+
 if __name__ == "__main__":
 
     start_time = time.perf_counter()
@@ -71,16 +73,15 @@ if __name__ == "__main__":
                             [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
                             [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
                             [64, 37, 22, 14, 53, 26, 30, 50, 44, 0]])
-    tour = [i for i in range(len(cost_matrix))]
+    tour = list(range(len(cost_matrix)))
     tour.extend([tour[0]])
     depot = 0
     print('Original Tour:', tour)
     print('Original Tour Cost:', tour_cost(cost_matrix, tour))
-    unvisited = [i for i in range(len(cost_matrix))]
+    unvisited = list(range(len(cost_matrix)))
     insertion_tour = farthest_insertion(cost_matrix, depot, unvisited)
     insertion_cost = tour_cost(cost, insertion_tour)
     print('Farthest Insertion Tour:', insertion_tour)
     print('Farthest Insertion Tour Cost:', insertion_cost)
 
     print('Computation Time:',(time.perf_counter() - start_time))
-     

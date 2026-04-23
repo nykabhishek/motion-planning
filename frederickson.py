@@ -1,24 +1,24 @@
-import networkx as nx
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.spatial import distance_matrix
 import time
 from itertools import chain
+
+import numpy as np
+
 from tsp_heuristics.christofides import Christofides
 
+
 def frederickson(adj_matrix, vehicles, depot):
-    tsp_tour, tsp_nodes, tsp_cost = Christofides(adj_matrix)
+    _, tsp_nodes, tsp_cost = Christofides(adj_matrix)
 
     depot_index = tsp_nodes.index(depot)
-    
+
     ordered_tsp_nodes = [i for i in tsp_nodes if tsp_nodes.index(i)>depot_index-1]
     ordered_tsp_nodes.extend([i for i in tsp_nodes if tsp_nodes.index(i)<depot_index])
     print(ordered_tsp_nodes)
 
     inter_city_cost = np.zeros(len(ordered_tsp_nodes))
-    for i in range(len(ordered_tsp_nodes)):
-        inter_city_cost[i] = adj_matrix[depot, ordered_tsp_nodes[i]]
-    
+    for i, node in enumerate(ordered_tsp_nodes):
+        inter_city_cost[i] = adj_matrix[depot, node]
+
     c_max = max(inter_city_cost)
     L = tsp_cost
 
@@ -26,17 +26,17 @@ def frederickson(adj_matrix, vehicles, depot):
 
     break_indices = np.full(vehicles-1, [depot])
     path_cost = 0
-  
+
     # for i in range(vehicles-2):
     j=0
     for i in range(len(ordered_tsp_nodes) - 1):
         path_cost = path_cost + adj_matrix[ordered_tsp_nodes[i], ordered_tsp_nodes[i+1]]
-        if(path_cost > (((j+1)/vehicles)*(L-2*c_max))+c_max):
+        if path_cost > (((j+1)/vehicles)*(L-2*c_max))+c_max:
             break_indices[j] = i
             j = j+1
-            if (j==(vehicles-1)):
+            if j == vehicles-1:
                 break
-    
+
     veh_tours = []
     start = 0
     end = 0
@@ -47,7 +47,7 @@ def frederickson(adj_matrix, vehicles, depot):
             print(tour)
             veh_tours.append(tour)
             start = end
-        elif k>0 and k<vehicles-1:
+        elif 0 < k < vehicles-1:
             end = break_indices[k]
             tour = list(chain([ordered_tsp_nodes[0]], ordered_tsp_nodes[start:end], [ordered_tsp_nodes[0]]))
             print(tour)
@@ -63,7 +63,7 @@ def frederickson(adj_matrix, vehicles, depot):
 
 
 if __name__ == "__main__":
-    
+
     # node_array = np.random.random_integers(0,high=10,size=(10,2))
     node_array = np.array([ [0,0],
                             [1,1],

@@ -1,6 +1,8 @@
-import numpy as np
-from utils import tour_cost
 import time
+
+import numpy as np
+
+from utils import tour_cost
 
 def two_opt(cost, tour, iterations):
     opt_tour = tour.copy()
@@ -9,14 +11,14 @@ def two_opt(cost, tour, iterations):
             for j in range(i + 2, len(opt_tour)-1):
                 if cost[opt_tour[i], opt_tour[i+1]] + cost[opt_tour[j], opt_tour[j+1]] > cost[opt_tour[i], opt_tour[j]] + cost[opt_tour[i+1], opt_tour[j+1]]:
                     opt_tour[i+1:j+1] = reversed(opt_tour[i+1:j+1])
-    
+
         if tour_cost(cost, opt_tour) < tour_cost(cost, tour):
-                    tour = opt_tour
+            tour = opt_tour
     return tour
 
 
 if __name__ == "__main__":
-    
+
     # node_array = np.random.random_integers(0,high=10,size=(10,2))
 
     start_time = time.perf_counter()
@@ -33,8 +35,8 @@ if __name__ == "__main__":
                      [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
                      [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
                      [64, 37, 22, 14, 53, 26, 30,  50, 44, 0]])
-    
-    tour = [i for i in range(len(cost))]
+
+    tour = list(range(len(cost)))
     tour.extend([tour[0]])
     print('Original Tour:', tour)
     print('Original Tour Cost:', tour_cost(cost, tour))
@@ -42,6 +44,6 @@ if __name__ == "__main__":
     opt2_tour = two_opt(cost, tour, iterations)
     print('2-opt Tour:', opt2_tour)
     print('2-opt Tour Cost:', tour_cost(cost, opt2_tour))
-   
+
 
     print('Computation Time:',(time.perf_counter() - start_time))

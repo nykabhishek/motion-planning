@@ -14,12 +14,13 @@ _HEURISTICS = os.path.join(_ROOT, 'tsp_heuristics')
 sys.path.insert(0, _HEURISTICS)
 sys.path.insert(0, _ROOT)
 
-from utils import tour_cost, nearest_unvisited          # noqa: E402
-from nearest_neighbour import nn                         # noqa: E402
-from christofides import Christofides                    # noqa: E402
-from insertion_nearest import nearest_insertion          # noqa: E402
-from insertion_cheapest import cheapest_insertion        # noqa: E402
-from insertion_farthest import farthest_insertion        # noqa: E402
+# pylint: disable=wrong-import-position
+from utils import tour_cost, nearest_unvisited
+from nearest_neighbour import nn
+from christofides import Christofides
+from insertion_nearest import nearest_insertion
+from insertion_cheapest import cheapest_insertion
+from insertion_farthest import farthest_insertion
 
 
 def _load(filename, attr):

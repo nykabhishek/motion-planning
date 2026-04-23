@@ -1,7 +1,8 @@
 import time
+
 import numpy as np
+
 from utils import tour_cost
-import random
 
 # def cheapest_insertion_beta(cost_matrix, depot):
 #     tour=[]
@@ -34,9 +35,10 @@ def cheapest_insertion(cost_matrix, depot, unvisited):
 
     # for i in unvisited:
     while len(unvisited) > 0:
-        
+
         dist = 1e6
         position = None
+        cheapest_city = unvisited[0]
 
         for city in unvisited:
             for j in range(len(tour)-1):
@@ -80,13 +82,13 @@ if __name__ == "__main__":
     #                         [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
     #                         [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
     #                         [64, 37, 22, 14, 53, 26, 30, 50, 44, 0]])
-    tour = [i for i in range(len(cost_matrix))]
+    tour = list(range(len(cost_matrix)))
     tour.extend([tour[0]])
     depot = 0
     print('Original Tour:', tour)
     print('Original Tour Cost:', tour_cost(cost_matrix, tour))
     # insertion_tour = cheapest_insertion(cost_matrix, depot)
-    unvisited = [i for i in range(len(cost_matrix))]
+    unvisited = list(range(len(cost_matrix)))
     insertion_tour = cheapest_insertion(cost_matrix, depot, unvisited)
     insertion_cost = tour_cost(cost_matrix, insertion_tour)
     print('Cheapest Insertion Tour:', insertion_tour)

@@ -1,6 +1,7 @@
-import numpy as np
 import time
-# import sys
+
+import numpy as np
+
 from utils import tour_cost
 
 def nn(cost_matrix, depot=0):
@@ -12,7 +13,7 @@ def nn(cost_matrix, depot=0):
         city = np.argmin(nn_matrix[city])
         nn_tour.append(city)
     nn_tour.extend([nn_tour[0]])
-    
+
     return nn_tour
 
 if __name__ == "__main__":
@@ -43,7 +44,7 @@ if __name__ == "__main__":
                             [33, 41, 52, 36, 51, 69, 74,  0,  6, 50],
                             [33, 36, 46, 30, 51, 63, 67,  6,  0, 44],
                             [64, 37, 22, 14, 53, 26, 30, 50, 44, 0]])
-    tour = [i for i in range(len(cost_matrix))]
+    tour = list(range(len(cost_matrix)))
     tour.extend([tour[0]])
     depot = 0
     print('Original Tour:', tour)
