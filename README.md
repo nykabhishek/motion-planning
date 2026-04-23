@@ -102,6 +102,7 @@ motion-planning/
 │   └── LKH_solver.py            # Lin-Kernighan-Helsgott solver wrapper
 ├── tests/
 │   └── test_algorithms.py       # Unit tests (22 tests across all algorithms)
+├── requirements.txt             # Python dependencies with minimum version bounds
 └── data/
     ├── TSP_data/                # Standard TSPLIB benchmark instances
     └── mTSP/minmax/             # Multi-vehicle benchmark instances
@@ -112,10 +113,10 @@ motion-planning/
 ## Requirements
 
 - Python ≥ 3.8
-- numpy
-- networkx
-- scipy
-- matplotlib
+- numpy ≥ 1.21
+- networkx ≥ 2.6
+- scipy ≥ 1.7
+- matplotlib ≥ 3.4
 
 ---
 
@@ -126,7 +127,7 @@ Clone the repository and install dependencies:
 ```bash
 git clone https://github.com/nykabhishek/motion-planning.git
 cd motion-planning
-pip install numpy networkx scipy matplotlib
+pip install -r requirements.txt
 ```
 
 No package installation is required — the modules are imported directly.
