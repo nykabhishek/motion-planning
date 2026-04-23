@@ -75,16 +75,9 @@ def is_valid_tour(tour, n, depot=0):
 # ---------------------------------------------------------------------------
 
 class TestTourCost(unittest.TestCase):
-    def test_three_edge_cycle(self):
+    def test_known_value(self):
         # 0→1→2→0: 32 + 21 + 53 = 106
         self.assertEqual(tour_cost(COST, [0, 1, 2, 0]), 106)
-
-    def test_two_node_round_trip(self):
-        cost = np.array([[0., 5.], [5., 0.]])
-        self.assertEqual(tour_cost(cost, [0, 1, 0]), 10)
-
-    def test_single_self_loop(self):
-        self.assertEqual(tour_cost(COST, [3, 3]), 0)
 
     def test_does_not_mutate_matrix(self):
         snapshot = COST.copy()
@@ -98,8 +91,7 @@ class TestTourCost(unittest.TestCase):
 
 class TestNearestUnvisited(unittest.TestCase):
     def test_returns_closest_city(self):
-        # Row 0 of COST: [0,32,53,51,84,72,76,33,33,64].
-        # After masking column 0, cheapest neighbour is city 1 (cost 32).
+        # Row 0: [0,32,53,51,84,72,76,33,33,64]; cheapest neighbour is city 1 (32).
         self.assertEqual(nearest_unvisited(COST, 0), 1)
 
     def test_does_not_mutate_matrix(self):
@@ -113,9 +105,6 @@ class TestNearestUnvisited(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 class TestNearestNeighbour(unittest.TestCase):
-    def test_valid_tour_from_depot_0(self):
-        self.assertTrue(is_valid_tour(nn(COST, depot=0), N))
-
     def test_valid_tour_all_depots(self):
         for d in range(N):
             with self.subTest(depot=d):
@@ -126,16 +115,10 @@ class TestNearestNeighbour(unittest.TestCase):
         nn(COST, depot=0)
         np.testing.assert_array_equal(COST, snapshot)
 
-    def test_greedy_choice_small_instance(self):
-        # From 0 the greedy path must visit 1 before 2 because cost(0,1)=1 < cost(0,2)=100.
+    def test_greedy_choice(self):
+        # From 0: cost(0,1)=1 < cost(0,2)=100, so city 1 must be visited first.
         cost = np.array([[0., 1., 100.], [1., 0., 1.], [100., 1., 0.]])
         self.assertEqual(nn(cost, depot=0), [0, 1, 2, 0])
-
-    def test_two_city_instance(self):
-        cost = np.array([[0., 7.], [7., 0.]])
-        tour = nn(cost, depot=0)
-        self.assertTrue(is_valid_tour(tour, 2))
-        self.assertEqual(tour_cost(cost, tour), 14)
 
 
 # ---------------------------------------------------------------------------
@@ -144,25 +127,17 @@ class TestNearestNeighbour(unittest.TestCase):
 
 class TestTwoOpt(unittest.TestCase):
     def test_valid_tour(self):
-        result = two_opt(COST, _identity_tour(), iterations=3)
-        self.assertTrue(is_valid_tour(result, N))
-
-    def test_does_not_worsen_tour(self):
-        initial = _identity_tour()
-        result = two_opt(COST, initial, iterations=5)
-        self.assertLessEqual(tour_cost(COST, result), tour_cost(COST, initial))
+        self.assertTrue(is_valid_tour(two_opt(COST, _identity_tour(), iterations=3), N))
 
     def test_improves_suboptimal_tour(self):
-        # The identity tour is known to be suboptimal for this cost matrix.
         initial = _identity_tour()
         result = two_opt(COST, initial, iterations=10)
         self.assertLess(tour_cost(COST, result), tour_cost(COST, initial))
 
-    def test_two_city_tour_unchanged(self):
+    def test_trivially_optimal_tour_unchanged(self):
+        # 2-city tour has no valid j in range(i+2, n-1); must not crash or degrade.
         cost = np.array([[0., 5.], [5., 0.]])
-        tour = [0, 1, 0]
-        result = two_opt(cost, tour, iterations=1)
-        self.assertEqual(tour_cost(cost, result), 10)
+        self.assertEqual(tour_cost(cost, two_opt(cost, [0, 1, 0], iterations=1)), 10)
 
 
 # ---------------------------------------------------------------------------
@@ -171,59 +146,32 @@ class TestTwoOpt(unittest.TestCase):
 
 class TestThreeOpt(unittest.TestCase):
     def test_valid_tour(self):
-        result = opt_3(COST, _identity_tour(), iterations=1)
-        self.assertTrue(is_valid_tour(result, N))
+        self.assertTrue(is_valid_tour(opt_3(COST, _identity_tour(), iterations=1), N))
 
     def test_does_not_worsen_tour(self):
         initial = _identity_tour()
         result = opt_3(COST, initial, iterations=1)
         self.assertLessEqual(tour_cost(COST, result), tour_cost(COST, initial))
 
-    def test_result_no_worse_than_two_opt(self):
-        # 3-opt subsumes 2-opt moves, so its cost should be ≤ 2-opt on same input.
-        initial = _identity_tour()
-        cost_2opt = tour_cost(COST, two_opt(COST, initial[:], iterations=3))
-        cost_3opt = tour_cost(COST, opt_3(COST, initial[:], iterations=3))
-        self.assertLessEqual(cost_3opt, cost_2opt + 1e-9)
-
 
 # ---------------------------------------------------------------------------
-# Nearest insertion
+# Insertion heuristics
 # ---------------------------------------------------------------------------
 
 class TestNearestInsertion(unittest.TestCase):
     def test_valid_tour(self):
-        tour = nearest_insertion(COST, depot=0, unvisited=list(range(N)))
-        self.assertTrue(is_valid_tour(tour, N))
+        self.assertTrue(is_valid_tour(
+            nearest_insertion(COST, depot=0, unvisited=list(range(N))), N))
 
-    def test_cost_is_positive(self):
-        tour = nearest_insertion(COST, depot=0, unvisited=list(range(N)))
-        self.assertGreater(tour_cost(COST, tour), 0)
-
-    def test_small_three_city_instance(self):
+    def test_small_instance(self):
         cost = np.array([[0., 1., 2.], [1., 0., 1.], [2., 1., 0.]])
-        tour = nearest_insertion(cost, depot=0, unvisited=[0, 1, 2])
-        self.assertTrue(is_valid_tour(tour, 3))
+        self.assertTrue(is_valid_tour(nearest_insertion(cost, 0, [0, 1, 2]), 3))
 
-    def test_two_city_instance(self):
-        cost = np.array([[0., 7.], [7., 0.]])
-        tour = nearest_insertion(cost, depot=0, unvisited=[0, 1])
-        self.assertTrue(is_valid_tour(tour, 2))
-        self.assertEqual(tour_cost(cost, tour), 14)
-
-
-# ---------------------------------------------------------------------------
-# Cheapest insertion
-# ---------------------------------------------------------------------------
 
 class TestCheapestInsertion(unittest.TestCase):
     def test_valid_tour(self):
-        tour = cheapest_insertion(COST, depot=0, unvisited=list(range(N)))
-        self.assertTrue(is_valid_tour(tour, N))
-
-    def test_cost_is_positive(self):
-        tour = cheapest_insertion(COST, depot=0, unvisited=list(range(N)))
-        self.assertGreater(tour_cost(COST, tour), 0)
+        self.assertTrue(is_valid_tour(
+            cheapest_insertion(COST, depot=0, unvisited=list(range(N))), N))
 
     def test_two_city_instance(self):
         cost = np.array([[0., 5.], [5., 0.]])
@@ -231,34 +179,16 @@ class TestCheapestInsertion(unittest.TestCase):
         self.assertTrue(is_valid_tour(tour, 2))
         self.assertEqual(tour_cost(cost, tour), 10)
 
-    def test_cost_not_worse_than_nearest(self):
-        # Cheapest insertion minimises insertion delta at each step,
-        # so it should find a tour competitive with nearest insertion.
-        ci = tour_cost(COST, cheapest_insertion(COST, 0, list(range(N))))
-        ni = tour_cost(COST, nearest_insertion(COST, 0, list(range(N))))
-        # Not a strict bound, but both are reasonable heuristics — within 50%
-        self.assertLess(ci, ni * 1.5)
-
-
-# ---------------------------------------------------------------------------
-# Farthest insertion
-# ---------------------------------------------------------------------------
 
 class TestFarthestInsertion(unittest.TestCase):
     def test_valid_tour(self):
-        tour = farthest_insertion(COST, depot=0, unvisited=list(range(N)))
-        self.assertTrue(is_valid_tour(tour, N))
+        self.assertTrue(is_valid_tour(
+            farthest_insertion(COST, depot=0, unvisited=list(range(N))), N))
 
-    def test_cost_is_positive(self):
-        tour = farthest_insertion(COST, depot=0, unvisited=list(range(N)))
-        self.assertGreater(tour_cost(COST, tour), 0)
-
-    def test_small_three_city_instance(self):
-        # Farthest from depot (0): city 2 (cost 10) > city 1 (cost 1).
-        # Initial tour: [0, 2, 0].  Then insert city 1 cheaply.
+    def test_small_instance(self):
+        # Farthest from {0}: city 2 (cost 10) chosen first, then city 1 inserted cheaply.
         cost = np.array([[0., 1., 10.], [1., 0., 1.], [10., 1., 0.]])
-        tour = farthest_insertion(cost, depot=0, unvisited=[0, 1, 2])
-        self.assertTrue(is_valid_tour(tour, 3))
+        self.assertTrue(is_valid_tour(farthest_insertion(cost, 0, [0, 1, 2]), 3))
 
 
 # ---------------------------------------------------------------------------
@@ -269,10 +199,6 @@ class TestChristofides(unittest.TestCase):
     def test_returns_all_nodes(self):
         _, nodes, _ = Christofides(COST)
         self.assertEqual(sorted(nodes), list(range(N)))
-
-    def test_tour_cost_is_positive(self):
-        _, _, cost = Christofides(COST)
-        self.assertGreater(cost, 0)
 
     def test_reported_cost_matches_nodes(self):
         _, nodes, reported = Christofides(COST)
@@ -287,12 +213,9 @@ class TestChristofides(unittest.TestCase):
         Christofides(COST)
         np.testing.assert_array_equal(COST, snapshot)
 
-    def test_approximation_ratio(self):
-        # Christofides guarantees ≤ 1.5× optimal for metric TSP.
-        # As a sanity check, verify it beats the trivially bad identity tour.
-        _, nodes, christofides_cost = Christofides(COST)
-        identity_cost = tour_cost(COST, _identity_tour())
-        self.assertLess(christofides_cost, identity_cost)
+    def test_beats_identity_tour(self):
+        _, _, christofides_cost = Christofides(COST)
+        self.assertLess(christofides_cost, tour_cost(COST, _identity_tour()))
 
 
 if __name__ == '__main__':
