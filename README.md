@@ -101,7 +101,7 @@ motion-planning/
 │   ├── christofides.py          # Christofides approximation algorithm
 │   └── LKH_solver.py            # Lin-Kernighan-Helsgott solver wrapper
 ├── tests/
-│   └── test_algorithms.py       # Unit tests (34 tests across all algorithms)
+│   └── test_algorithms.py       # Unit tests (22 tests across all algorithms)
 └── data/
     ├── TSP_data/                # Standard TSPLIB benchmark instances
     └── mTSP/minmax/             # Multi-vehicle benchmark instances
@@ -235,7 +235,7 @@ nearest = nearest_unvisited(cost, city=0)
 python -m unittest discover -s tests -v
 ```
 
-Expected output: **34 tests, 0 failures**.
+Expected output: **22 tests, 0 failures**.
 
 ---
 
