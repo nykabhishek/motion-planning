@@ -29,7 +29,7 @@ def frederickson(adj_matrix, vehicles, depot):
   
     # for i in range(vehicles-2):
     j=0
-    for i in range(len(ordered_tsp_nodes)):
+    for i in range(len(ordered_tsp_nodes) - 1):
         path_cost = path_cost + adj_matrix[ordered_tsp_nodes[i], ordered_tsp_nodes[i+1]]
         if(path_cost > (((j+1)/vehicles)*(L-2*c_max))+c_max):
             break_indices[j] = i
@@ -59,6 +59,7 @@ def frederickson(adj_matrix, vehicles, depot):
             print(tour)
             veh_tours.append(tour)
 
+    return veh_tours
 
 
 if __name__ == "__main__":
@@ -75,7 +76,7 @@ if __name__ == "__main__":
                             [5,8],
                             [3,7]])
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
     # adj_matrix = distance_matrix(node_array, node_array, p=2)
 
     adj_matrix = np.random.random_integers(0,high=100,size=(100,100))
@@ -85,4 +86,4 @@ if __name__ == "__main__":
     depot = 9
     tsp_tours = frederickson(adj_matrix, vehicles, depot)
 	
-    print('Computation Time:',(time.clock() - start_time))
+    print('Computation Time:',(time.perf_counter() - start_time))

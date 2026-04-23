@@ -6,10 +6,10 @@ from utils import tour_cost
 def nn(cost_matrix, depot=0):
     city = depot
     nn_tour = [city]
-    nn_martix = cost_matrix
+    nn_matrix = cost_matrix.copy()
     for _ in range(1, len(cost_matrix)):
-        nn_martix[:,city] = 1e6 #ideally np.inf
-        city = np.argmin(nn_martix[city])
+        nn_matrix[:,city] = np.inf
+        city = np.argmin(nn_matrix[city])
         nn_tour.append(city)
     nn_tour.extend([nn_tour[0]])
     
@@ -17,7 +17,7 @@ def nn(cost_matrix, depot=0):
 
 if __name__ == "__main__":
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
     # adj_matrix = distance_matrix(node_array, node_array, p=2)
 
     # cost_matrix = np.random.random_integers(0,high=100,size=(5,5))
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     print('Nearest Neighbour Tour:', nn_tour)
     print('Nearest Neighbour Tour Cost:', nn_cost)
 	
-    print('Computation Time:',(time.clock() - start_time))
+    print('Computation Time:',(time.perf_counter() - start_time))

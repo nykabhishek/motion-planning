@@ -1,6 +1,5 @@
 import numpy as np
 from utils import tour_cost
-from itertools import combinations
 import time
 
 def two_opt(cost, tour, iterations):
@@ -20,7 +19,7 @@ if __name__ == "__main__":
     
     # node_array = np.random.random_integers(0,high=10,size=(10,2))
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
     # adj_matrix = distance_matrix(node_array, node_array, p=2)
 
     # cost = np.random.random_integers(0,high=100,size=(100,100))
@@ -45,4 +44,4 @@ if __name__ == "__main__":
     print('2-opt Tour Cost:', tour_cost(cost, opt2_tour))
    
 	
-    print('Computation Time:',(time.clock() - start_time))
+    print('Computation Time:',(time.perf_counter() - start_time))

@@ -8,8 +8,7 @@ def far_city(cost_matrix, visited, unvisited):
     max_length = 0
     for city_A in visited:
         for city_B in unvisited:
-            if city_B not in visited:
-                d = cost_matrix[city_A, city_B]
+            d = cost_matrix[city_A, city_B]
 
                 if  d > max_length:
                     max_length = d
@@ -48,7 +47,7 @@ def farthest_insertion(cost_matrix, depot, unvisited):
      
 if __name__ == "__main__":
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
     # adj_matrix = distance_matrix(node_array, node_array, p=2)
 
     # cost_matrix = np.random.random_integers(0,high=100,size=(5,5))
@@ -85,5 +84,5 @@ if __name__ == "__main__":
     print('Farthest Insertion Tour:', insertion_tour)
     print('Farthest Insertion Tour Cost:', insertion_cost)
 	
-    print('Computation Time:',(time.clock() - start_time))                  
+    print('Computation Time:',(time.perf_counter() - start_time))
      

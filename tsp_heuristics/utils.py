@@ -7,11 +7,7 @@ def tour_cost(cost_, tour):
     return cost
 
 def nearest_unvisited(cost_matrix, city):
-    costs = cost_matrix
-    # for i in range(cost_matrix):
-    #     # if i not in to_be_visited:
-    #         costs.delete(i)
-
-    costs[:,city] = 1e6   
+    costs = cost_matrix.copy()
+    costs[:,city] = np.inf
     nearest_city = np.argmin(costs[city])
     return nearest_city
