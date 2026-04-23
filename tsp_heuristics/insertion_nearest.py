@@ -8,10 +8,9 @@ def nearest_city(cost_matrix_, visited_, unvisited_):
     for city_A in visited_:
         for city_B in unvisited_:
             d = cost_matrix_[city_A, city_B]
-                # print(d)
-                if  d < min_length:
-                    min_length = d
-                    nearest_city = city_B
+            if d < min_length:
+                min_length = d
+                nearest_city = city_B
 
     return nearest_city
 

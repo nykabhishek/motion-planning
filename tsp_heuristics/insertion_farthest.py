@@ -9,10 +9,9 @@ def far_city(cost_matrix, visited, unvisited):
     for city_A in visited:
         for city_B in unvisited:
             d = cost_matrix[city_A, city_B]
-
-                if  d > max_length:
-                    max_length = d
-                    farthest_city = city_B
+            if d > max_length:
+                max_length = d
+                farthest_city = city_B
 
     return farthest_city
 

@@ -7,7 +7,7 @@ def tour_cost(cost_, tour):
     return cost
 
 def nearest_unvisited(cost_matrix, city):
-    costs = cost_matrix.copy()
+    costs = cost_matrix.astype(float)
     costs[:,city] = np.inf
     nearest_city = np.argmin(costs[city])
     return nearest_city

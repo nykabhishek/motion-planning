@@ -6,7 +6,7 @@ from utils import tour_cost
 def nn(cost_matrix, depot=0):
     city = depot
     nn_tour = [city]
-    nn_matrix = cost_matrix.copy()
+    nn_matrix = cost_matrix.astype(float)
     for _ in range(1, len(cost_matrix)):
         nn_matrix[:,city] = np.inf
         city = np.argmin(nn_matrix[city])
